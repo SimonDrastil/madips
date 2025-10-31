@@ -1,0 +1,33 @@
+<?php
+/** @var array $data */
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MadMix</title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+</head>
+<body>
+<?php require __DIR__ . '/header.php'; ?>
+<main class="container">
+    <?php if (!\MadMix\Model\DB::isAvailable()): ?>
+        <div class="alert warning">
+            MadMix is running in demo mode with in-memory data. Configure your database to unlock saving, sharing, and admin tools.
+            <?php if ($error = \MadMix\Model\DB::lastError()): ?>
+                <details>
+                    <summary>Connection help</summary>
+                    <p><?= htmlspecialchars($error); ?></p>
+                </details>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+    <?php require __DIR__ . '/flash.php'; ?>
+    <?php require $viewPath; ?>
+</main>
+<?php require __DIR__ . '/footer.php'; ?>
+<script src="/app.js" defer></script>
+</body>
+</html>
