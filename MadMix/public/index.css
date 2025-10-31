@@ -126,6 +126,22 @@ textarea {
 .flash.success { background: #e9f9f1; color: #1e7b5c; }
 .flash.error { background: #ffecec; color: #b22; }
 
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 14px;
+    border-left: 4px solid #f0b429;
+    background: #fff8e6;
+    color: #8a6d1a;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.04);
+}
+
+.alert.warning details {
+    margin-top: .5rem;
+    font-size: .9rem;
+    color: var(--muted);
+}
+
 .story {
     background: rgba(124,93,250,0.08);
     padding: 1.5rem;

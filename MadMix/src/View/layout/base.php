@@ -13,6 +13,17 @@
 <body>
 <?php require __DIR__ . '/header.php'; ?>
 <main class="container">
+    <?php if (!\MadMix\Model\DB::isAvailable()): ?>
+        <div class="alert warning">
+            MadMix is running in demo mode with in-memory data. Configure your database to unlock saving, sharing, and admin tools.
+            <?php if ($error = \MadMix\Model\DB::lastError()): ?>
+                <details>
+                    <summary>Connection help</summary>
+                    <p><?= htmlspecialchars($error); ?></p>
+                </details>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     <?php require __DIR__ . '/flash.php'; ?>
     <?php require $viewPath; ?>
 </main>

@@ -3,23 +3,33 @@ declare(strict_types=1);
 
 namespace MadMix\Model;
 
+use MadMix\Util\FallbackData;
 use MadMix\Util\Slug;
 use PDO;
+use RuntimeException;
 
 final class Template
 {
     public static function allPublic(): array
     {
-        $stmt = DB::conn()->query('SELECT t.*, c.name AS category_name FROM templates t JOIN categories c ON c.id = t.category_id WHERE is_public = 1 ORDER BY created_at DESC');
-        return $stmt->fetchAll();
+        try {
+            $stmt = DB::conn()->query('SELECT t.*, c.name AS category_name FROM templates t JOIN categories c ON c.id = t.category_id WHERE is_public = 1 ORDER BY created_at DESC');
+            return $stmt->fetchAll();
+        } catch (RuntimeException $e) {
+            return FallbackData::templates();
+        }
     }
 
     public static function findBySlug(string $slug): ?array
     {
-        $stmt = DB::conn()->prepare('SELECT t.*, c.name AS category_name FROM templates t JOIN categories c ON c.id = t.category_id WHERE slug = :slug');
-        $stmt->execute(['slug' => $slug]);
-        $result = $stmt->fetch();
-        return $result ?: null;
+        try {
+            $stmt = DB::conn()->prepare('SELECT t.*, c.name AS category_name FROM templates t JOIN categories c ON c.id = t.category_id WHERE slug = :slug');
+            $stmt->execute(['slug' => $slug]);
+            $result = $stmt->fetch();
+            return $result ?: null;
+        } catch (RuntimeException $e) {
+            return FallbackData::templateBySlug($slug);
+        }
     }
 
     public static function create(array $data): int

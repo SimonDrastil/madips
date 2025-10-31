@@ -38,3 +38,4 @@ php tests/ValidatorTest.php
 ## Notes
 - The project ships with an autoloader in `vendor/autoload.php` for simple PSR-4 loading.
 - Configure web servers (Apache/Nginx) to route all requests through `public/index.php` for routing to function.
+- If the database connection fails, MadMix automatically switches to a demo mode that serves seeded templates and stores stories in-memory for the session. Configure your `.env` credentials to regain full persistence.
